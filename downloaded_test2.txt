@@ -1,0 +1,4 @@
+Second test file with different content.
+This file demonstrates concurrent access handling.
+File locking will prevent simultaneous writes.
+Test file 2

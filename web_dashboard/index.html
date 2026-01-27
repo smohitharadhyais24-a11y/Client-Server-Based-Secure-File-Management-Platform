@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OS File Server - System Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <h1>🔬 Operating System File Server Dashboard</h1>
+                <p class="subtitle">Real-time visualization of OS-level file operations, locking, and deadlock mechanisms</p>
+                <div class="architecture-badge">
+                    <span class="layer">C Server (OS Core)</span>
+                    <span class="arrow">→</span>
+                    <span class="layer">Python API</span>
+                    <span class="arrow">→</span>
+                    <span class="layer active">Web Dashboard</span>
+                </div>
+            </div>
+            <div class="server-status" id="serverStatus">
+                <span class="status-indicator"></span>
+                <span class="status-text">Checking...</span>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Grid -->
+        <div class="dashboard-grid">
+            
+            <!-- System Status Panel - INTERACTIVE OS COMMANDS -->
+            <div class="panel status-panel">
+                <h2>📊 System Status (Click cards to run OS commands)</h2>
+                <div class="status-grid" id="statusGrid">
+                    <div class="stat-card clickable" onclick="runOsCommand('list-files')">
+                        <div class="stat-value" id="fileCount">-</div>
+                        <div class="stat-label">Files Stored</div>
+                        <div class="os-concept">📤 Click: ls storage/</div>
+                    </div>
+                    <div class="stat-card clickable" onclick="runOsCommand('storage-size')">
+                        <div class="stat-value" id="totalSize">-</div>
+                        <div class="stat-label">Total Storage</div>
+                        <div class="os-concept">📤 Click: du -sh storage/</div>
+                    </div>
+                    <div class="stat-card clickable" onclick="runOsCommand('show-locks')">
+                        <div class="stat-value" id="activeLocks">-</div>
+                        <div class="stat-label">Active Locks</div>
+                        <div class="os-concept">📤 Click: View fcntl locks</div>
+                    </div>
+                    <div class="stat-card clickable" onclick="runOsCommand('show-logs')">
+                        <div class="stat-value" id="logEntries">-</div>
+                        <div class="stat-label">Audit Logs</div>
+                        <div class="os-concept">📤 Click: tail audit.log</div>
+                    </div>
+                    <div class="stat-card clickable" onclick="runOsCommand('security-alerts')">
+                        <div class="stat-value" id="securityEvents">-</div>
+                        <div class="stat-label">Security Alerts</div>
+                        <div class="os-concept">📤 Click: Show alerts</div>
+                    </div>
+                </div>
+
+                <!-- OS Command Terminal Output Panel -->
+                <div class="os-terminal" id="osTerminal" style="display: none;">
+                    <div class="terminal-header">
+                        <strong>🖥️ OS Command Output</strong>
+                        <button onclick="closeOsTerminal()" class="btn-close">×</button>
+                    </div>
+                    <div class="terminal-content" id="terminalContent">
+                        <div class="terminal-line">$ Ready to execute OS commands...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- File Operations Panel -->
+            <div class="panel operations-panel">
+                <h2>📁 File Operations</h2>
+                <p class="panel-subtitle">All operations forwarded to C server using TCP socket IPC</p>
+                
+                <!-- Upload -->
+                <div class="operation-section">
+                    <h3>Upload File</h3>
+                    <div class="os-mapping">OS: open() → fcntl(F_WRLCK) → write() → close()</div>
+                    <div class="upload-form">
+                        <input type="file" id="uploadFile" />
+                        <button onclick="uploadFile()" class="btn btn-primary">
+                            <span class="btn-icon">⬆️</span> Upload to C Server
+                        </button>
+                    </div>
+                </div>
+
+                <!-- File List -->
+                <div class="operation-section">
+                    <h3>Current Files</h3>
+                    <div class="os-mapping">OS: readdir() → stat()</div>
+                    <div class="file-list" id="fileList">
+                        <div class="loading">Loading...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lock Visualization Panel -->
+            <div class="panel locks-panel">
+                <h2>🔒 File Locking State</h2>
+                <p class="panel-subtitle">Visualizes OS-level fcntl() locks - Deadlock avoidance in action</p>
+                
+                <div class="locks-legend">
+                    <div class="legend-item">
+                        <span class="lock-badge write">WRITE</span>
+                        <span>Exclusive (F_WRLCK)</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="lock-badge read">READ</span>
+                        <span>Shared (F_RDLCK)</span>
+                    </div>
+                </div>
+
+                <div class="locks-container" id="locksContainer">
+                    <div class="no-locks">No active locks</div>
+                </div>
+
+                <div class="deadlock-info">
+                    <h4>Deadlock Mechanisms:</h4>
+                    <ul>
+                        <li><strong>Prevention:</strong> Bounded file transfer (read exact N bytes)</li>
+                        <li><strong>Avoidance:</strong> Non-blocking lock acquisition (F_SETLK)</li>
+                        <li><strong>Recovery:</strong> 300-second timeout mechanism</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Security Alerts Panel -->
+            <div class="panel security-panel">
+                <h2>🛡️ Security Alerts</h2>
+                <p class="panel-subtitle">Shows authentication failures, integrity mismatches, blocked clients</p>
+                <div class="alerts-legend">
+                    <span class="alert-badge critical">Critical</span>
+                    <span class="alert-badge warning">Warning</span>
+                    <span class="alert-badge info">Info</span>
+                </div>
+                <div class="alerts-list" id="securityAlerts">
+                    <div class="loading">Loading security events...</div>
+                </div>
+            </div>
+
+            <!-- Audit Timeline Panel -->
+            <div class="panel timeline-panel">
+                <h2>📜 OS Audit Timeline</h2>
+                <p class="panel-subtitle">Thread-safe audit log from C server (mutex-protected writes)</p>
+                
+                <div class="timeline-filters">
+                    <button class="filter-btn active" onclick="filterLogs('all')">All</button>
+                    <button class="filter-btn" onclick="filterLogs('UPLOAD')">Uploads</button>
+                    <button class="filter-btn" onclick="filterLogs('DOWNLOAD')">Downloads</button>
+                    <button class="filter-btn" onclick="filterLogs('FAILED')">Failed</button>
+                </div>
+
+                <div class="timeline" id="timeline">
+                    <div class="loading">Loading audit logs...</div>
+                </div>
+            </div>
+
+            <!-- OS Concepts Reference -->
+            <div class="panel concepts-panel">
+                <h2>🎓 OS Concepts Demonstrated</h2>
+                <div class="concepts-grid">
+                    <div class="concept-card">
+                        <div class="concept-icon">🔧</div>
+                        <div class="concept-title">UNIX File I/O</div>
+                        <div class="concept-desc">open(), read(), write(), close(), stat(), unlink()</div>
+                    </div>
+                    <div class="concept-card">
+                        <div class="concept-icon">🔐</div>
+                        <div class="concept-title">File Locking</div>
+                        <div class="concept-desc">fcntl() with F_RDLCK, F_WRLCK, F_SETLK</div>
+                    </div>
+                    <div class="concept-card">
+                        <div class="concept-icon">🚫</div>
+                        <div class="concept-title">Deadlock Prevention</div>
+                        <div class="concept-desc">Bounded transfer protocol</div>
+                    </div>
+                    <div class="concept-card">
+                        <div class="concept-icon">⚠️</div>
+                        <div class="concept-title">Deadlock Avoidance</div>
+                        <div class="concept-desc">Non-blocking lock acquisition</div>
+                    </div>
+                    <div class="concept-card">
+                        <div class="concept-icon">⏱️</div>
+                        <div class="concept-title">Deadlock Recovery</div>
+                        <div class="concept-desc">Timeout-based recovery mechanism</div>
+                    </div>
+                    <div class="concept-card">
+                        <div class="concept-icon">🧵</div>
+                        <div class="concept-title">Multi-threading</div>
+                        <div class="concept-desc">pthread_create(), mutex synchronization</div>
+                    </div>
+                    <div class="concept-card">
+                        <div class="concept-icon">🔌</div>
+                        <div class="concept-title">TCP Socket IPC</div>
+                        <div class="concept-desc">Client-server communication</div>
+                    </div>
+                    <div class="concept-card">
+                        <div class="concept-icon">📝</div>
+                        <div class="concept-title">Audit Logging</div>
+                        <div class="concept-desc">Thread-safe append-only logs</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Demo / Explain Mode Panel -->
+            <div class="panel demo-panel">
+                <h2>🎬 Demo / Explain Mode</h2>
+                <p class="panel-subtitle">Step-through script to showcase OS behaviors</p>
+                <ol class="demo-steps">
+                    <li>Upload a file → watch WRITE lock + hash creation</li>
+                    <li>Start second upload of same name → see lock rejection</li>
+                    <li>Pause/stall client → server times out and cleans partial file</li>
+                    <li>Download same file from two browsers → shared READ locks</li>
+                    <li>Send bad token or path traversal → security alert appears</li>
+                </ol>
+                <p class="demo-note">Dashboard highlights locks, audit timeline, and security alerts in real time.</p>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="dashboard-footer">
+            <div class="footer-content">
+                <p><strong>Architecture:</strong> Pure OS implementation in C with web-based observability layer</p>
+                <p><strong>Note:</strong> All file operations happen at OS level in C server. This dashboard only visualizes system state.</p>
+                <p>Similar to production system observability tools (Prometheus, Grafana, DataDog) but for OS internals</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast"></div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+
+Large test file for testing bounded file transfers.
+This file contains multiple lines to simulate larger transfers.
+Line 3: Operating System Concepts Implementation
+Line 4: UNIX File I/O System Calls
+Line 5: TCP Socket-based IPC
+Line 6: File Locking with fcntl
+Line 7: Deadlock Prevention, Avoidance, and Recovery
+Line 8: Multi-threaded Server with pthread
+Line 9: Thread Synchronization with mutex
+Line 10: Process Control and Management
+Line 11: Client-Server Architecture
+Line 12: Terminal-based Demonstration
+Line 13: Bounded File Transfer Protocol
+Line 14: Non-blocking Lock Acquisition
+Line 15: Timeout Mechanism for Recovery
+Line 16: Minimal Critical Section Design
+Line 17: Audit Logging and Metadata Management
+Line 18: Secure File Management Platform
+Line 19: OS Lab Part-B Project
+Line 20: Ready for evaluation and demonstration
