@@ -1,0 +1,868 @@
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+ * Serving Flask app 'app'
+ * Debug mode: on
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+[2026-01-27 23:45:35] [API] LOGIN_ATTEMPT :: User=user1 IP=127.0.0.1
+[AUTH] Looking for users.db at: C:\Users\S Mohith\Desktop\PROJECTS\3RD SEM\NEW OS\auth\users.db
+[AUTH] [OK] users.db found, loading...
+[AUTH] [OK] Loaded 3 users
+[2026-01-27 23:45:35] [API] LOGIN_SUCCESS :: User=user1 Token=AhUuZSIOMRT4GEnN...
+[2026-01-27 23:45:40] [API] LOGIN_ATTEMPT :: User=admin IP=127.0.0.1
+[AUTH] Looking for users.db at: C:\Users\S Mohith\Desktop\PROJECTS\3RD SEM\NEW OS\auth\users.db
+[AUTH] [OK] users.db found, loading...
+[AUTH] [OK] Loaded 3 users
+[2026-01-27 23:45:40] [API] LOGIN_SUCCESS :: User=admin Token=IKfW29L3dxTs-kqo...
+[2026-01-27 23:45:42] [API] LOGIN_ATTEMPT :: User=user1 IP=127.0.0.1
+[AUTH] Looking for users.db at: C:\Users\S Mohith\Desktop\PROJECTS\3RD SEM\NEW OS\auth\users.db
+[AUTH] [OK] users.db found, loading...
+[AUTH] [OK] Loaded 3 users
+[2026-01-27 23:45:42] [API] LOGIN_SUCCESS :: User=user1 Token=MjwZukpCYUk95lXp...
+[2026-01-27 23:45:44] [API] LOGIN_ATTEMPT :: User=user2 IP=127.0.0.1
+[AUTH] Looking for users.db at: C:\Users\S Mohith\Desktop\PROJECTS\3RD SEM\NEW OS\auth\users.db
+[AUTH] [OK] users.db found, loading...
+[AUTH] [OK] Loaded 3 users
+[2026-01-27 23:45:44] [API] LOGIN_SUCCESS :: User=user2 Token=6lFNPYR8oRhIjIlL...
+[2026-01-27 23:45:46] [API] LOGIN_ATTEMPT :: User=admin IP=127.0.0.1
+[AUTH] Looking for users.db at: C:\Users\S Mohith\Desktop\PROJECTS\3RD SEM\NEW OS\auth\users.db
+[AUTH] [OK] users.db found, loading...
+[AUTH] [OK] Loaded 3 users
+[2026-01-27 23:45:46] [API] LOGIN_FAILED :: User=admin IP=127.0.0.1 Reason=Invalid username or password
+[2026-01-27 23:45:48] [API] LOGIN_ATTEMPT :: User=user1 IP=127.0.0.1
+[AUTH] Looking for users.db at: C:\Users\S Mohith\Desktop\PROJECTS\3RD SEM\NEW OS\auth\users.db
+[AUTH] [OK] users.db found, loading...
+[AUTH] [OK] Loaded 3 users
+[2026-01-27 23:45:48] [API] LOGIN_FAILED :: User=user1 IP=127.0.0.1 Reason=Invalid username or password
+[2026-01-27 23:45:50] [API] LOGIN_ATTEMPT :: User=nonexistent IP=127.0.0.1
+[AUTH] Looking for users.db at: C:\Users\S Mohith\Desktop\PROJECTS\3RD SEM\NEW OS\auth\users.db
+[AUTH] [OK] users.db found, loading...
+[AUTH] [OK] Loaded 3 users
+[2026-01-27 23:45:50] [API] LOGIN_FAILED :: User=nonexistent IP=127.0.0.1 Reason=Invalid username or password
+[2026-01-27 23:46:03] [API] LOGOUT_SUCCESS :: User=admin
+[2026-01-27 23:46:03] [API] LIST :: ok - 3 files
+[2026-01-27 23:46:05] [API] LOGOUT_SUCCESS :: User=user1
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+[2026-01-27 23:46:53] [API] LIST :: ok - 3 files
+[2026-01-27 23:46:53] [API] LIST :: ok - 3 files
+[2026-01-27 23:46:55] [API] LIST :: ok - 3 files
+[2026-01-27 23:46:57] [API] LIST :: ok - 3 files
+[2026-01-27 23:46:59] [API] LIST :: ok - 3 files
+[2026-01-27 23:47:00] [API] LIST :: ok - 3 files
+[2026-01-27 23:47:01] [API] LIST :: ok - 3 files
+[2026-01-27 23:47:04] [API] LIST :: ok - 3 files
+[2026-01-27 23:47:05] [API] LIST :: ok - 3 files
+[2026-01-27 23:47:07] [API] LIST :: ok - 3 files
+[2026-01-27 23:47:09] [API] LIST :: ok - 3 files
+[2026-01-27 23:47:11] [API] LIST :: ok - 3 files
+[2026-01-27 23:47:13] [API] LIST :: ok - 3 files
+[2026-01-27 23:47:15] [API] LIST :: ok - 3 files
+[2026-01-27 23:47:17] [API] LIST :: ok - 3 files
+[2026-01-27 23:47:19] [API] LIST :: ok - 3 files
+[2026-01-27 23:47:21] [API] LIST :: ok - 3 files
+[2026-01-27 23:47:24] [API] LIST :: ok - 3 files
+[2026-01-27 23:47:26] [API] LIST :: ok - 3 files
+[2026-01-27 23:47:28] [API] LIST :: ok - 3 files
+[2026-01-27 23:47:30] [API] LIST :: ok - 3 files
+[2026-01-27 23:47:32] [API] LIST :: ok - 3 files
+[2026-01-27 23:47:34] [API] LIST :: ok - 3 files
+[2026-01-27 23:47:36] [API] LIST :: ok - 3 files
+[2026-01-27 23:47:38] [API] LIST :: ok - 3 files
+[2026-01-27 23:47:40] [API] LIST :: ok - 3 files
+[2026-01-27 23:47:42] [API] LIST :: ok - 3 files
+[2026-01-27 23:47:44] [API] LIST :: ok - 3 files
+[2026-01-27 23:47:46] [API] LIST :: ok - 3 files
+[2026-01-27 23:47:48] [API] LIST :: ok - 3 files
+[2026-01-27 23:47:50] [API] LIST :: ok - 3 files
+[2026-01-27 23:47:52] [API] LIST :: ok - 3 files
+[2026-01-27 23:47:54] [API] LIST :: ok - 3 files
+[2026-01-27 23:47:56] [API] LIST :: ok - 3 files
+[2026-01-27 23:47:58] [API] LIST :: ok - 3 files
+[2026-01-27 23:48:00] [API] LIST :: ok - 3 files
+[2026-01-27 23:48:02] [API] LIST :: ok - 3 files
+[2026-01-27 23:48:04] [API] LIST :: ok - 3 files
+[2026-01-27 23:48:06] [API] LIST :: ok - 3 files
+[2026-01-27 23:48:08] [API] LIST :: ok - 3 files
+[2026-01-27 23:48:10] [API] LIST :: ok - 3 files
+[2026-01-27 23:48:12] [API] LIST :: ok - 3 files
+[2026-01-27 23:48:14] [API] LIST :: ok - 3 files
+[2026-01-27 23:48:16] [API] LIST :: ok - 3 files
+[2026-01-27 23:48:18] [API] LIST :: ok - 3 files
+[2026-01-27 23:48:20] [API] LIST :: ok - 3 files
+[2026-01-27 23:48:22] [API] LIST :: ok - 3 files
+[2026-01-27 23:48:56] [API] LIST :: ok - 3 files
+[2026-01-27 23:48:58] [API] LIST :: ok - 3 files
+[2026-01-27 23:49:00] [API] LIST :: ok - 3 files
+[2026-01-27 23:49:02] [API] LIST :: ok - 3 files
+[2026-01-27 23:49:04] [API] LIST :: ok - 3 files
+[2026-01-27 23:49:06] [API] LIST :: ok - 3 files
+[2026-01-27 23:49:08] [API] LIST :: ok - 3 files
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+[2026-01-27 23:49:10] [API] LIST :: ok - 3 files
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+[2026-01-27 23:49:12] [API] LIST :: ok - 3 files
+[2026-01-27 23:49:14] [API] LIST :: ok - 3 files
+[2026-01-27 23:49:16] [API] LIST :: ok - 3 files
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+[2026-01-27 23:49:19] [API] LIST :: ok - 3 files
+[2026-01-27 23:49:20] [API] LIST :: ok - 3 files
+[2026-01-27 23:49:22] [API] LIST :: ok - 3 files
+[2026-01-27 23:49:24] [API] LIST :: ok - 3 files
+[2026-01-27 23:49:26] [API] LIST :: ok - 3 files
+[2026-01-27 23:49:28] [API] LIST :: ok - 3 files
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+[2026-01-27 23:49:31] [API] LIST :: ok - 3 files
+[2026-01-27 23:49:32] [API] LIST :: ok - 3 files
+[2026-01-27 23:49:34] [API] LIST :: ok - 3 files
+[2026-01-27 23:49:36] [API] LIST :: ok - 3 files
+[2026-01-27 23:49:38] [API] LIST :: ok - 3 files
+[2026-01-27 23:49:40] [API] LIST :: ok - 3 files
+[2026-01-27 23:49:42] [API] LIST :: ok - 3 files
+[2026-01-27 23:49:44] [API] LIST :: ok - 3 files
+[2026-01-27 23:49:46] [API] LIST :: ok - 3 files
+[2026-01-27 23:49:48] [API] LIST :: ok - 3 files
+[2026-01-27 23:49:50] [API] LIST :: ok - 3 files
+[2026-01-27 23:49:52] [API] LIST :: ok - 3 files
+[2026-01-27 23:49:54] [API] LIST :: ok - 3 files
+[2026-01-27 23:49:56] [API] LIST :: ok - 3 files
+[2026-01-27 23:50:03] [API] LIST :: ok - 3 files
+[2026-01-27 23:51:03] [API] LIST :: ok - 3 files
+[2026-01-27 23:51:42] [API] LIST :: ok - 3 files
+[2026-01-27 23:51:43] [API] LIST :: ok - 3 files
+[2026-01-27 23:51:45] [API] LIST :: ok - 3 files
+[2026-01-27 23:51:47] [API] LIST :: ok - 3 files
+[2026-01-27 23:51:49] [API] LIST :: ok - 3 files
+[2026-01-27 23:51:51] [API] LIST :: ok - 3 files
+[2026-01-27 23:51:53] [API] LIST :: ok - 3 files
+[2026-01-27 23:51:55] [API] LIST :: ok - 3 files
+[2026-01-27 23:51:57] [API] LIST :: ok - 3 files
+[2026-01-27 23:51:59] [API] LIST :: ok - 3 files
+[2026-01-27 23:52:01] [API] LIST :: ok - 3 files
+[2026-01-27 23:52:03] [API] LIST :: ok - 3 files
+[2026-01-27 23:52:05] [API] LIST :: ok - 3 files
+[2026-01-27 23:52:07] [API] LIST :: ok - 3 files
+[2026-01-27 23:52:09] [API] LIST :: ok - 3 files
+[2026-01-27 23:52:11] [API] LIST :: ok - 3 files
+[2026-01-27 23:52:13] [API] LIST :: ok - 3 files
+[2026-01-27 23:52:15] [API] LIST :: ok - 3 files
+[2026-01-27 23:52:17] [API] LIST :: ok - 3 files
+[2026-01-27 23:52:19] [API] LIST :: ok - 3 files
+[2026-01-27 23:52:21] [API] LIST :: ok - 3 files
+[2026-01-27 23:52:23] [API] LIST :: ok - 3 files
+[2026-01-27 23:52:25] [API] LIST :: ok - 3 files
+[2026-01-27 23:52:27] [API] LIST :: ok - 3 files
+[2026-01-27 23:52:29] [API] LIST :: ok - 3 files
+[2026-01-27 23:52:31] [API] LIST :: ok - 3 files
+[2026-01-27 23:52:33] [API] LIST :: ok - 3 files
+[2026-01-27 23:52:35] [API] LIST :: ok - 3 files
+[2026-01-27 23:52:37] [API] LIST :: ok - 3 files
+[2026-01-27 23:52:39] [API] LIST :: ok - 3 files
+[2026-01-27 23:52:41] [API] LIST :: ok - 3 files
+[2026-01-27 23:52:43] [API] LIST :: ok - 3 files
+[2026-01-27 23:52:45] [API] LIST :: ok - 3 files
+[2026-01-27 23:52:47] [API] LIST :: ok - 3 files
+[2026-01-27 23:53:03] [API] LIST :: ok - 3 files
+[2026-01-27 23:54:03] [API] LIST :: ok - 3 files
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+[2026-01-27 23:55:03] [API] LIST :: ok - 3 files
+[2026-01-27 23:56:03] [API] LIST :: ok - 3 files
+[2026-01-27 23:57:03] [API] LIST :: ok - 3 files
+[2026-01-27 23:58:03] [API] LIST :: ok - 3 files
+[2026-01-27 23:59:03] [API] LIST :: ok - 3 files
+[2026-01-28 00:00:03] [API] LIST :: ok - 3 files
+[2026-01-28 00:01:03] [API] LIST :: ok - 3 files
+[2026-01-28 00:01:06] [API] LIST :: ok - 3 files
+[2026-01-28 00:01:07] [API] LIST :: ok - 3 files
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+
+======================================================================
+OS FILE SERVER - WEB API LAYER
+======================================================================
+C Server: 127.0.0.1:8888
+API Server: http://localhost:5000
+
+ARCHITECTURE:
+  C File Server (OS Core)
+       | TCP/IPC
+  Python API Layer (This)
+       | HTTP/JSON
+  Web Dashboard (Browser)
+
+ALL FILE OPERATIONS HAPPEN IN C SERVER
+This layer only forwards requests and visualizes state
+======================================================================
+

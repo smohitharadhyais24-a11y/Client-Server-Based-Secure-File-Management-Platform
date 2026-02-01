@@ -236,7 +236,7 @@ typedef struct {
 void *handle_client(void *arg);
 void handle_upload(int client_socket, char *filename, long filesize);
 void handle_download(int client_socket, char *filename);
-void handle_list(int client_socket);
+void handle_list(int client_socket, const char *username);
 void handle_delete(int client_socket, char *filename);
 void handle_locks(int client_socket);
 void handle_logs(int client_socket);
@@ -424,7 +424,10 @@ void *handle_client(void *arg) {
             send_response(client_socket, "ERROR", "Invalid DOWNLOAD command format");
         }
     } else if (strncmp(command_buffer, "LIST", 4) == 0) {
-        handle_list(client_socket);
+        // Format: LIST [username] - optional username for user-specific listing
+        char username[MAX_FILENAME] = "";
+        sscanf(command_buffer, "LIST %s", username);
+        handle_list(client_socket, username);
     } else if (strncmp(command_buffer, "DELETE", 6) == 0) {
         // Format: DELETE <filename>
         if (sscanf(command_buffer, "DELETE %s", filename) == 1) {
@@ -460,21 +463,55 @@ void *handle_client(void *arg) {
 void handle_upload(int client_socket, char *filename, long filesize) {
     char filepath[MAX_PATH];
     char buffer[MAX_BUFFER];
+    char dir_path[MAX_PATH];
     int fd;
     ssize_t bytes_read, total_read = 0;
     time_t start_time, current_time;
     
-    // Validate filename (security check)
-    if (strchr(filename, '/') || strchr(filename, '\\')) {
+    // Allow username/filename format for user-specific storage
+    // Validate that only ONE slash exists and it's not at start/end
+    int slash_count = 0;
+    char *slash_pos = NULL;
+    for (char *p = filename; *p; p++) {
+        if (*p == '/' || *p == '\\\\') {
+            slash_count++;
+            slash_pos = p;
+        }
+    }
+    
+    // Check for path traversal attempts (..)
+    if (strstr(filename, "..") || filename[0] == '/' || filename[0] == '\\\\') {
         send_response(client_socket, "ERROR", "Invalid filename");
         write_audit_log("UPLOAD", filename, "FAILED", "Invalid filename");
         write_security_event("ACCESS_VIOLATION", "", filename, "Path traversal attempt");
         return;
     }
+    
+    // If filename contains username/, create the user directory
+    if (slash_count == 1 && slash_pos && slash_pos != filename && slash_pos[1] != '\\0') {
+        // Extract username directory
+        int username_len = slash_pos - filename;
+        snprintf(dir_path, MAX_PATH, "%s%.*s", STORAGE_DIR, username_len, filename);
+        
+        // Create user directory if it doesn't exist
+        struct stat st = {0};
+        if (stat(dir_path, &st) == -1) {
+            if (mkdir(dir_path, 0755) != 0) {
+                send_response(client_socket, "ERROR", "Cannot create user directory");
+                write_audit_log("UPLOAD", filename, "FAILED", "Directory creation error");
+                return;
+            }
+        }
+    } else if (slash_count > 1) {
+        send_response(client_socket, "ERROR", "Invalid filename - too many path separators");
+        write_audit_log("UPLOAD", filename, "FAILED", "Invalid filename");
+        write_security_event("ACCESS_VIOLATION", "", filename, "Multiple path separators");
+        return;
+    }
 
     // Construct file path
     snprintf(filepath, MAX_PATH, "%s%s", STORAGE_DIR, filename);
-    printf("[DEBUG] Attempting to lock: %s\n", filename);
+    printf("[DEBUG] Attempting to lock: %s\\n", filename);
     
     // DEADLOCK AVOIDANCE: Try to acquire GLOBAL write lock (non-blocking) BEFORE sending READY
     if (acquire_global_lock(filename) != 0) {
@@ -587,8 +624,13 @@ void handle_download(int client_socket, char *filename) {
     struct stat file_stat;
     ssize_t bytes_read;
 
-    // Validate filename
-    if (strchr(filename, '/') || strchr(filename, '\\')) {
+    // Allow username/filename format, check for path traversal
+    int slash_count = 0;
+    for (char *p = filename; *p; p++) {
+        if (*p == '/' || *p == '\\\\') slash_count++;
+    }
+    
+    if (strstr(filename, "..") || filename[0] == '/' || filename[0] == '\\\\' || slash_count > 1) {
         send_response(client_socket, "ERROR", "Invalid filename");
         write_security_event("ACCESS_VIOLATION", "", filename, "Path traversal attempt");
         return;
@@ -686,15 +728,23 @@ void handle_download(int client_socket, char *filename) {
  * LIST Handler
  * Demonstrates: Directory traversal, stat() usage
  */
-void handle_list(int client_socket) {
+void handle_list(int client_socket, const char *username) {
     DIR *dir;
     struct dirent *entry;
     struct stat file_stat;
+    char dirpath[MAX_PATH];
     char filepath[MAX_PATH];
     char response[MAX_BUFFER * 4];
     int count = 0;
 
-    dir = opendir(STORAGE_DIR);
+    // If username provided, list only that user's directory
+    if (username && username[0] != '\0') {
+        snprintf(dirpath, MAX_PATH, "%s%s", STORAGE_DIR, username);
+    } else {
+        snprintf(dirpath, MAX_PATH, "%s", STORAGE_DIR);
+    }
+
+    dir = opendir(dirpath);
     if (dir == NULL) {
         send_response(client_socket, "ERROR", "Cannot open storage directory");
         return;
@@ -705,11 +755,16 @@ void handle_list(int client_socket) {
     while ((entry = readdir(dir)) != NULL) {
         if (entry->d_name[0] == '.') continue; // Skip hidden files
         
-        snprintf(filepath, MAX_PATH, "%s%s", STORAGE_DIR, entry->d_name);
+        snprintf(filepath, MAX_PATH, "%s/%s", dirpath, entry->d_name);
         
         if (stat(filepath, &file_stat) == 0 && S_ISREG(file_stat.st_mode)) {
             char line[512];
-            snprintf(line, 512, "%s (%ld bytes)\n", entry->d_name, file_stat.st_size);
+            if (username && username[0] != '\0') {
+                // Include username prefix for consistency
+                snprintf(line, 512, "%s/%s (%ld bytes)\n", username, entry->d_name, file_stat.st_size);
+            } else {
+                snprintf(line, 512, "%s (%ld bytes)\n", entry->d_name, file_stat.st_size);
+            }
             strcat(response, line);
             count++;
         }
@@ -722,7 +777,7 @@ void handle_list(int client_socket) {
     }
 
     write(client_socket, response, strlen(response));
-    write_audit_log("LIST", "N/A", "SUCCESS", "Listed files");
+    write_audit_log("LIST", username && username[0] ? username : "all", "SUCCESS", "Listed files");
 }
 
 /*
@@ -735,8 +790,13 @@ void handle_delete(int client_socket, char *filename) {
     char filepath[MAX_PATH];
     int fd;
 
-    // Validate filename
-    if (strchr(filename, '/') || strchr(filename, '\\')) {
+    // Allow username/filename format, check for path traversal
+    int slash_count = 0;
+    for (char *p = filename; *p; p++) {
+        if (*p == '/' || *p == '\\\\') slash_count++;
+    }
+    
+    if (strstr(filename, "..") || filename[0] == '/' || filename[0] == '\\\\' || slash_count > 1) {
         send_response(client_socket, "ERROR", "Invalid filename");
         write_security_event("ACCESS_VIOLATION", "", filename, "Invalid filename for delete");
         return;

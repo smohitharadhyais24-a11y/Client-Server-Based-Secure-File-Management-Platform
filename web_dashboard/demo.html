@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OS Demo Mode - File Server</title>
+    <link rel="stylesheet" href="demo.css">
+</head>
+<body>
+    <div class="demo-container">
+        <!-- ==================== HEADER ==================== -->
+        <div class="demo-header">
+            <div class="header-content">
+                <h1>🎬 OS Demo Mode - Live Operating System Demonstrations</h1>
+                <p>Interactive demonstrations of UNIX file system concepts, locking mechanisms, and OS behavior</p>
+            </div>
+            <div class="header-controls">
+                <div class="mode-toggle">
+                    <label class="switch">
+                        <input type="checkbox" id="explainMode" onchange="toggleExplainMode()">
+                        <span class="slider"></span>
+                    </label>
+                    <span style="margin-left: 10px;">📚 Explain Mode (Safe Presentation)</span>
+                </div>
+                <button onclick="window.location.href='/'" class="btn-back">← Back to Dashboard</button>
+            </div>
+        </div>
+
+        <!-- ==================== MAIN DEMO LAYOUT ==================== -->
+        <div class="demo-main-grid">
+            <!-- LEFT COLUMN: Demo Scenarios -->
+            <div class="demo-left-panel">
+                <div class="panel">
+                    <h2>🧪 Demo Scenarios</h2>
+                    <p class="subtitle">Select a scenario to run or explain OS concepts</p>
+
+                    <!-- Demo 1: WRITE Lock -->
+                    <div class="demo-card" data-demo="write-lock">
+                        <div class="demo-header-card">
+                            <span class="demo-icon">🔒</span>
+                            <h3>DEMO 1: Exclusive WRITE Lock</h3>
+                            <span class="demo-badge">CRITICAL SECTION</span>
+                        </div>
+                        <div class="demo-description">
+                            Demonstrates exclusive locking using <code>fcntl(F_WRLCK)</code>. 
+                            When Client A uploads a file, Client B's concurrent upload is rejected.
+                        </div>
+                        <div class="demo-steps">
+                            <div class="step">📝 Step 1: Client A uploads file</div>
+                            <div class="step">🚫 Step 2: Client B upload rejected (lock held)</div>
+                            <div class="step">✅ Step 3: Lock released after completion</div>
+                        </div>
+                        <div class="demo-os-concepts">
+                            <strong>OS Concepts:</strong> Critical Section, Mutual Exclusion, fcntl(F_WRLCK)
+                        </div>
+                        <button class="btn-run-demo" onclick="runDemo('write-lock')">▶ Run Demo</button>
+                        <button class="btn-explain" onclick="explainDemo('write-lock')">📖 Explain</button>
+                    </div>
+
+                    <!-- Demo 2: Multiple Readers -->
+                    <div class="demo-card" data-demo="readers-writers">
+                        <div class="demo-header-card">
+                            <span class="demo-icon">👥</span>
+                            <h3>DEMO 2: Shared READ Locks (Readers-Writers)</h3>
+                            <span class="demo-badge badge-success">SHARED ACCESS</span>
+                        </div>
+                        <div class="demo-description">
+                            Classic readers-writers problem. Multiple clients can read simultaneously using <code>fcntl(F_RDLCK)</code>.
+                        </div>
+                        <div class="demo-steps">
+                            <div class="step">📖 Step 1: Client A downloads file (READ lock)</div>
+                            <div class="step">📖 Step 2: Client B downloads same file (READ lock)</div>
+                            <div class="step">✅ Step 3: Both succeed - locks are shared</div>
+                        </div>
+                        <div class="demo-os-concepts">
+                            <strong>OS Concepts:</strong> Readers-Writers Problem, Shared Locks, fcntl(F_RDLCK)
+                        </div>
+                        <button class="btn-run-demo" onclick="runDemo('readers-writers')">▶ Run Demo</button>
+                        <button class="btn-explain" onclick="explainDemo('readers-writers')">📖 Explain</button>
+                    </div>
+
+                    <!-- Demo 3: Deadlock Recovery -->
+                    <div class="demo-card" data-demo="deadlock-recovery">
+                        <div class="demo-header-card">
+                            <span class="demo-icon">⚠️</span>
+                            <h3>DEMO 3: Deadlock Detection & Recovery</h3>
+                            <span class="demo-badge badge-danger">CRITICAL</span>
+                        </div>
+                        <div class="demo-description">
+                            Simulates a stalled client holding a lock. System detects timeout and performs recovery.
+                        </div>
+                        <div class="demo-steps">
+                            <div class="step">⏱️ Step 1: Upload starts, lock acquired</div>
+                            <div class="step">💤 Step 2: Client stalls (simulated disconnect)</div>
+                            <div class="step">🔴 Step 3: Timeout detected (300s)</div>
+                            <div class="step">🔧 Step 4: Lock released, partial file cleaned</div>
+                        </div>
+                        <div class="demo-os-concepts">
+                            <strong>OS Concepts:</strong> Deadlock Recovery, Timeout Detection, Resource Cleanup
+                        </div>
+                        <button class="btn-run-demo" onclick="runDemo('deadlock-recovery')">▶ Run Demo</button>
+                        <button class="btn-explain" onclick="explainDemo('deadlock-recovery')">📖 Explain</button>
+                    </div>
+
+                    <!-- Demo 4: Security Violation -->
+                    <div class="demo-card" data-demo="security-violation">
+                        <div class="demo-header-card">
+                            <span class="demo-icon">🛡️</span>
+                            <h3>DEMO 4: Security Violation Detection</h3>
+                            <span class="demo-badge badge-warning">SECURITY</span>
+                        </div>
+                        <div class="demo-description">
+                            Demonstrates OS-level security checks: invalid auth tokens, path traversal attempts, and access control.
+                        </div>
+                        <div class="demo-steps">
+                            <div class="step">🚫 Step 1: Invalid token attempt detected</div>
+                            <div class="step">📝 Step 2: Security event logged</div>
+                            <div class="step">🔒 Step 3: Access denied, client blocked</div>
+                        </div>
+                        <div class="demo-os-concepts">
+                            <strong>OS Concepts:</strong> Access Control, Authentication, Security Logging
+                        </div>
+                        <button class="btn-run-demo" onclick="runDemo('security-violation')">▶ Run Demo</button>
+                        <button class="btn-explain" onclick="explainDemo('security-violation')">📖 Explain</button>
+                    </div>
+
+                    <!-- Demo 5: Concurrent Operations -->
+                    <div class="demo-card" data-demo="concurrent-ops">
+                        <div class="demo-header-card">
+                            <span class="demo-icon">⚡</span>
+                            <h3>DEMO 5: Concurrent File Operations</h3>
+                            <span class="demo-badge badge-info">CONCURRENCY</span>
+                        </div>
+                        <div class="demo-description">
+                            Multiple clients performing different operations simultaneously. Shows thread safety and lock coordination.
+                        </div>
+                        <div class="demo-steps">
+                            <div class="step">📤 Step 1: Client A uploads fileA.txt</div>
+                            <div class="step">📥 Step 2: Client B downloads fileB.txt</div>
+                            <div class="step">🗑️ Step 3: Client C deletes fileC.txt</div>
+                            <div class="step">✅ Step 4: All operations complete without conflict</div>
+                        </div>
+                        <div class="demo-os-concepts">
+                            <strong>OS Concepts:</strong> Concurrency, Thread Safety, Lock Granularity
+                        </div>
+                        <button class="btn-run-demo" onclick="runDemo('concurrent-ops')">▶ Run Demo</button>
+                        <button class="btn-explain" onclick="explainDemo('concurrent-ops')">📖 Explain</button>
+                    </div>
+
+                    <!-- Demo 6: Deadlock Conditions -->
+                    <div class="demo-card" data-demo="deadlock-conditions">
+                        <div class="demo-header-card">
+                            <span class="demo-icon">🧠</span>
+                            <h3>DEMO 6: Deadlock Conditions Analysis (THEORY)</h3>
+                            <span class="demo-badge badge-danger">⭐ VIVA GOLD</span>
+                        </div>
+                        <div class="demo-description">
+                            <strong>The 4 Deadlock Conditions:</strong> This demo shows how your system intentionally BREAKS all 4 conditions to prevent deadlock. Perfect for viva questions!
+                        </div>
+                        <div class="demo-steps">
+                            <div class="step">📚 Step 1: Show 4 deadlock conditions</div>
+                            <div class="step">⚠️ Step 2: Simulate potential deadlock scenario</div>
+                            <div class="step">✅ Step 3: Show how system avoids it</div>
+                            <div class="step">📊 Step 4: Live conditions checklist</div>
+                        </div>
+                        <div class="demo-os-concepts">
+                            <strong>OS Concepts:</strong> Deadlock Prevention, Hold-and-Wait, Non-blocking Locks
+                        </div>
+                        <button class="btn-explain" onclick="explainDemo('deadlock-conditions')" style="width: 100%; margin-top: 10px;">📚 Show 4 Conditions & Prevention Strategy</button>
+                    </div>
+                </div>
+
+                <!-- Bottom: Step Instructions Panel -->
+                <div class="panel instructions-panel">
+                    <h2>📋 Current Demo Instructions</h2>
+                    <div id="instructionsContent" class="instructions-content">
+                        <p style="color: #a0b0c8;">Select a demo scenario above to see detailed step-by-step instructions.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: Live Console + Visual State -->
+            <div class="demo-right-panel">
+                <!-- Live OS Event Console -->
+                <div class="panel console-panel">
+                    <div class="console-header">
+                        <h2>🖥️ Live OS Event Stream</h2>
+                        <div class="console-controls">
+                            <button onclick="clearConsole()" class="btn-small">🗑️ Clear</button>
+                            <button onclick="refreshConsole()" class="btn-small">🔄 Refresh</button>
+                            <span class="status-indicator" id="consoleStatus">● LIVE</span>
+                        </div>
+                    </div>
+                    <div class="terminal" id="osConsole">
+                        <div class="terminal-line">$ OS Event Stream Initialized</div>
+                        <div class="terminal-line">------------------------------</div>
+                        <div class="terminal-line">[SYSTEM] Waiting for events...</div>
+                    </div>
+                </div>
+
+                <!-- Visual OS State Panels -->
+                <div class="state-grid">
+                    <!-- Active Locks Panel -->
+                    <div class="panel state-panel">
+                        <h3>🔐 Active Locks</h3>
+                        <div id="activeLocks" class="state-content">
+                            <div class="state-empty">No active locks</div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Alerts Panel -->
+                    <div class="panel state-panel">
+                        <h3>⚠️ System Alerts</h3>
+                        <div id="systemAlerts" class="state-content">
+                            <div class="state-empty">No alerts</div>
+                        </div>
+                    </div>
+
+                    <!-- Live Stats Panel -->
+                    <div class="panel state-panel">
+                        <h3>📊 Live Stats</h3>
+                        <div id="liveStats" class="state-content">
+                            <div class="stat-row">
+                                <span class="stat-label">Files:</span>
+                                <span class="stat-value" id="statFiles">0</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Locks:</span>
+                                <span class="stat-value" id="statLocks">0</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Operations:</span>
+                                <span class="stat-value" id="statOps">0</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Security Events:</span>
+                                <span class="stat-value" id="statSecurity">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- OS Concepts Mapping Panel -->
+                <div class="panel concepts-panel">
+                    <h2>🎓 OS Concepts Demonstrated (Live Mapping)</h2>
+                    <div class="concepts-grid">
+                        <div class="concept-card" data-concept="file-io">
+                            <span class="concept-icon">📁</span>
+                            <div class="concept-name">UNIX File I/O</div>
+                            <div class="concept-calls">open(), read(), write(), close()</div>
+                        </div>
+                        <div class="concept-card" data-concept="locking">
+                            <span class="concept-icon">🔒</span>
+                            <div class="concept-name">File Locking</div>
+                            <div class="concept-calls">fcntl(F_WRLCK, F_RDLCK)</div>
+                        </div>
+                        <div class="concept-card" data-concept="deadlock">
+                            <span class="concept-icon">⚠️</span>
+                            <div class="concept-name">Deadlock Recovery</div>
+                            <div class="concept-calls">Timeout Detection, Cleanup</div>
+                        </div>
+                        <div class="concept-card" data-concept="ipc">
+                            <span class="concept-icon">🔌</span>
+                            <div class="concept-name">IPC via TCP</div>
+                            <div class="concept-calls">socket(), accept(), recv()</div>
+                        </div>
+                        <div class="concept-card" data-concept="threads">
+                            <span class="concept-icon">⚡</span>
+                            <div class="concept-name">Thread Sync</div>
+                            <div class="concept-calls">pthread_create(), mutex</div>
+                        </div>
+                        <div class="concept-card" data-concept="security">
+                            <span class="concept-icon">🛡️</span>
+                            <div class="concept-name">Security</div>
+                            <div class="concept-calls">Auth, Access Control</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reset Demo State Button -->
+                <div class="panel reset-panel">
+                    <button onclick="resetDemoState()" class="btn-reset">
+                        🧹 Reset Demo State (Clear Test Files)
+                    </button>
+                    <p style="font-size: 0.85em; color: #a0b0c8; margin-top: 10px;">
+                        Clears all demo-generated test files and resets the demo environment.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+    <script src="demo.js"></script>
+</body>
+</html>

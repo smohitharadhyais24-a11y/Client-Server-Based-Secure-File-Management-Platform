@@ -1,0 +1,115 @@
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.155.5.205:5000
+Press CTRL+C to quit
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 152-354-161
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\auth.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 152-354-161
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\auth.py', reloading
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\test_auth.py', reloading
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\auth.py', reloading
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\test_auth.py', reloading
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\auth.py', reloading
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\test_auth.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 152-354-161
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\security.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 152-354-161
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\security.py', reloading
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\security.py', reloading
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\security.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 152-354-161
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\app.py', reloading
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\app.py', reloading
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\app.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 152-354-161
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\app.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 152-354-161
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\app.py', reloading
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\app.py', reloading
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\security.py', reloading
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\app.py', reloading
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\security.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 152-354-161
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\app.py', reloading
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\app.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 152-354-161
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\app.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 152-354-161
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\app.py', reloading
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\app.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 152-354-161
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\app.py', reloading
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\app.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 152-354-161
+ * Detected change in 'C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\\Lib\\os.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 152-354-161
+ * Detected change in 'C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\\Lib\\http\\cookiejar.py', reloading
+ * Detected change in 'C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\\Lib\\http\\cookies.py', reloading
+ * Detected change in 'C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\\Lib\\importlib\\readers.py', reloading
+ * Detected change in 'C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\\Lib\\importlib\\resources\\readers.py', reloading
+ * Detected change in 'C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\\Lib\\importlib\\resources\\_itertools.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 152-354-161
+ * Detected change in 'C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\\Lib\\netrc.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 152-354-161
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\security.py', reloading
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\auth.py', reloading
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\test_auth.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 152-354-161
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\app.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 152-354-161
+ * Detected change in 'C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\\Lib\\encodings\\utf_16_le.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 152-354-161
+ * Detected change in 'C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\\Lib\\io.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 152-354-161
+ * Detected change in 'C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\\Lib\\os.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 152-354-161
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\app.py', reloading
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\app.py', reloading
+ * Detected change in 'C:\\Users\\S Mohith\\Desktop\\PROJECTS\\3RD SEM\\NEW OS\\api_layer\\app.py', reloading
+ * Restarting with watchdog (windowsapi)
+Traceback (most recent call last):
+  File "C:\Users\S Mohith\Desktop\PROJECTS\3RD SEM\NEW OS\api_layer\app.py", line 118, in <module>
+    @require_auth
+     ^^^^^^^^^^^^
+NameError: name 'require_auth' is not defined

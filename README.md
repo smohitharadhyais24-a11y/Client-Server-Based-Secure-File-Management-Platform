@@ -1,18 +1,181 @@
-# 🔥 Client-Server Based Secure File Management Platform
+# 🔥 Client–Server Based Secure File Management Platform using UNIX File System Concepts
 
 **Operating System Concepts Implementation - OS Lab Part-B Project**
 
+**COMPLETE FEATURE SET:** 🆕 Web Dashboard · 🆕 Demo Mode (6 Interactive Demos) · 🆕 Real-time OS Event Streaming · 🆕 Multi-Client Support · 🆕 User-Specific File Isolation · 🆕 Deadlock Analysis Tool
+
 ## 📋 Project Overview
 
-A **terminal-based, deadlock-free file management system** implementing core UNIX Operating System concepts:
+A **production-grade, deadlock-free file management system** implementing core UNIX Operating System concepts with a modern web-based observability dashboard:
 
-- ✅ **UNIX File I/O** (open, read, write, fcntl, stat, unlink)
-- ✅ **TCP Socket-based IPC** (client-server communication)
-- ✅ **File Locking with fcntl** (F_RDLCK, F_WRLCK)
-- ✅ **Deadlock Prevention, Avoidance, and Recovery**
-- ✅ **Multi-threaded Server** (pthread)
-- ✅ **Thread Synchronization** (mutex for metadata/logs)
-- ✅ **Process Control** (fork alternative: pthread_create)
+- ✅ **UNIX File I/O** (open, read, write, close, fcntl, stat, unlink)
+- ✅ **File Locking with fcntl()** (F_RDLCK for shared reads, F_WRLCK for exclusive writes)
+- ✅ **Readers-Writers Problem** (Multiple readers, exclusive writers)
+- ✅ **Deadlock Prevention, Avoidance, and Recovery** (Coffman's 4 conditions analysis)
+- ✅ **Multi-threaded Server** (pthread_create, one thread per client)
+- ✅ **Thread Synchronization** (pthread_mutex for shared data protection)
+- ✅ **TCP Socket-based IPC** (Client-server over network)
+- ✅ **User Authentication & Authorization** (Session tokens, role-based access)
+- ✅ **User-Specific File Isolation** (storage/user1/, storage/user2/ separate namespaces)
+- ✅ **Real-time Audit Logging** (Mutex-protected, thread-safe event stream)
+- ✅ **Security Event Tracking** (Auth failures, path traversal detection, access violations)
+- ✅ **Web Dashboard** (Live monitoring, file operations, lock visualization)
+- ✅ **Interactive Demo Mode** (6 guided demonstrations with explanations)
+
+---
+
+## 🆕 COMPLETE FEATURE SET (February 2026)
+
+### **🎛️ Web Dashboard (Live System Observability)**
+Modern, responsive HTML/CSS/JavaScript dashboard at `http://localhost:5000/` featuring:
+
+**System Status Panel:**
+- Real-time file count (user-specific)
+- Total storage used (formatted: B, KB, MB)
+- Active locks count (WRITE and READ)
+- Security events counter
+- C Server connection status
+
+**File Operations Panel:**
+- Upload files (creates FormData, triggers WRITE lock)
+- Download files (triggers READ lock)
+- Delete files (triggers exclusive lock)
+- Current files list with download/delete buttons
+- Real-time file list refresh after operations
+
+**OS Audit Timeline:**
+- 50 most recent operations with timestamps
+- Filter tabs: All, Uploads, Downloads, Deletes, Locks, Failed/Security
+- Color-coded rows (success=green, failed=red, locks=yellow)
+- 🆕 **Clear History button** (truncates audit log file)
+- Sortable and searchable
+
+**Security & Threats:**
+- Live security alert panel with severity badges
+- Threat level indicator (SECURE/CAUTION/DANGER)
+- Failed auth attempts, path traversal, access violations
+- Auto-expiring alerts
+
+**Live Lock Status:**
+- Shows all active locks with file, type (READ/WRITE), and PID
+- Updates every 3 seconds
+- Color-coded by lock type
+
+### **🎬 Interactive Demo Mode (NEW!)**
+Dedicated demo page at `/demo.html` with **6 interactive demonstrations**:
+
+**Demo 1: Exclusive WRITE Lock** ⭐⭐⭐
+- Shows fcntl(F_WRLCK) in action
+- One client uploads → lock acquired
+- Second client blocked → lock denied
+- Real console output with [LOCK] tags
+
+**Demo 2: Shared READ Locks (Readers-Writers)** ⭐⭐⭐
+- Multiple clients download same file
+- Both acquire [LOCK] READ entries
+- Demonstrates shared vs exclusive semantics
+- Key OS concept: No reader-writer conflict
+
+**Demo 3: Deadlock Detection & Recovery** ⭐⭐⭐⭐
+- Simulates timeout scenario
+- Shows [TIMEOUT] detection
+- Demonstrates lock release + cleanup
+- Recovery mechanism explained live
+
+**Demo 4: Security Violation Detection** ⭐⭐⭐
+- Path traversal attempt blocked
+- Invalid token rejected
+- Security events logged with [SECURITY] tags
+- Access control in action
+
+**Demo 5: Concurrent File Operations** ⭐⭐⭐
+- 3 concurrent uploads (fileA, fileB, fileC)
+- Each has independent lock
+- No blocking/contention
+- Demonstrates lock granularity
+
+**Demo 6: Deadlock Conditions Analysis (VIVA GOLD)** ⭐⭐⭐⭐⭐
+- 🆕 **NEW:** Shows 4 Coffman conditions
+- Live checklist showing which conditions are BROKEN
+- Explains why system avoids deadlock
+- Includes viva answer template
+- Perfect for "How is deadlock handled?" questions
+
+**Demo Features:**
+- 📚 **Explain Mode toggle** - Safe presentation (no execution)
+- 🖥️ **Live OS Event Console** - Real-time terminal output
+- 🔐 **Active Locks panel** - Live lock visualization
+- ⚠️ **System Alerts panel** - Real-time alerts
+- 📊 **Live Stats** - Files, locks, operations, security events
+- 🎓 **OS Concepts Mapping** - Highlight demonstrated concepts
+- 🧹 **Reset Demo State** - Clean up test files
+
+### **👥 Multi-Client File Isolation**
+- User1 uploads → stored in `storage/user1/`
+- User2 uploads → stored in `storage/user2/`
+- Each client only sees their own files
+- C server auto-creates user directories
+- Prevents unauthorized access to other user files
+
+**Demo Credentials:**
+- `user1` / `test123`
+- `user2` / `secret`
+- `admin` / `password`
+
+### **📝 Audit Trail & Security Logging**
+**Audit Log** (`logs/audit.log`):
+- Every operation: UPLOAD, DOWNLOAD, DELETE, LOCK_ACQUIRED, LOCK_DENIED
+- Format: `[timestamp] OPERATION=X FILE=Y STATUS=Z DETAILS=...`
+- Mutex-protected writes (thread-safe)
+- Readable in dashboard or via `/api/logs`
+- 🆕 **Clear button** to truncate history
+
+**Security Log** (`logs/security.log`):
+- Authentication failures
+- Invalid tokens
+- Path traversal attempts
+- Access violations
+- IP-based rate limiting (3 failures → 600s block)
+- Readable via `/api/security`
+
+### **🔐 Authentication & Authorization**
+- JWT-like token system (session-based)
+- User credentials in `auth/users.db` (hashed)
+- `@require_auth` decorator on all API endpoints
+- Session attached to Flask request object
+- 24-hour token expiry
+- IP tracking for security alerts
+
+---
+
+## 🏗️ Architecture (3-Tier)
+- DEADLOCK_RECOVERY events
+- Real-time security dashboard panel
+
+### **PHASE 4: Professional Web Dashboard** (In Progress)
+7-panel cybersecurity-themed dashboard:
+1. **System Status Cards** - Files, storage, locks, alerts
+2. **File Operations** - Upload, download, delete with OS flow visualization
+3. **Live Lock Visualization** - Real-time lock table with color coding
+4. **Audit Timeline** - Chronological event log with filtering
+5. **Security Alerts** - Failed auth, IP blocks, violations
+6. **OS Concepts Reference** - Interactive system call explanations
+7. **Terminal Event Feed** - Live OS event stream (monospace, cybersecurity style)
+
+**Features:**
+- Dark theme with professional styling
+- Auto-polling every 2 seconds
+- Multi-user support (independent sessions per browser)
+- Click-to-execute OS commands
+- Real-time lock status updates
+
+### **PHASE 5: Demo Guide & Documentation** ✅
+- 9 complete demo scenarios with expected outputs
+- Viva Q&A scripts with OS concept explanations
+- Step-by-step terminal commands (copy-paste ready)
+- OS concept mapping for each operation
+
+See: [DEMO_GUIDE.md](DEMO_GUIDE.md)
 
 ---
 
@@ -204,6 +367,40 @@ xdg-open web_dashboard/index.html
 ```
 
 ✅ **Dashboard should now show live data!**
+
+---
+
+## 🔐 **NEW: Authentication Quick Start**
+
+The system now includes user authentication. Default test credentials:
+
+| Username | Password | Role |
+|----------|----------|------|
+| `admin` | `password` | admin |
+| `user1` | `test123` | user |
+| `user2` | `secret` | user |
+
+**How to Login (Web Dashboard):**
+1. Dashboard detects no token → shows login form
+2. Enter username/password
+3. Click "Login"
+4. Token saved to browser localStorage
+5. Dashboard auto-loads with authenticated session
+
+**How to Login (API):**
+```bash
+curl -X POST http://localhost:5000/api/login \
+  -H "Content-Type: application/json" \
+  -d '{"username":"admin","password":"password"}'
+
+# Response:
+# {"success": true, "token": "...", "username": "admin"}
+```
+
+Then use token in subsequent requests:
+```bash
+curl -H "Authorization: Bearer <token>" http://localhost:5000/api/events
+```
 
 ---
 
@@ -826,7 +1023,188 @@ make help      # Show help
 
 ---
 
-## 🎯 Scoring Points for Evaluation
+## � **DEMO MODE GUIDE (Interactive Learning Tool)**
+
+### **What is Demo Mode?**
+A dedicated web page (`/demo.html`) with **6 interactive demonstrations** designed specifically for evaluation and teaching. Each demo can run **live** with real file operations OR in **Explain Mode** for safe presentations.
+
+### **How to Access Demo Mode**
+
+From the main dashboard (http://localhost:5000/):
+1. Look for the yellow **"🎬 Demo Mode"** button in the header
+2. Click it → Navigate to `/demo.html`
+3. You'll see the demo scenarios panel with 6 interactive cards
+
+**OR** go directly to:
+```
+http://localhost:5000/demo.html
+```
+
+### **6 Interactive Demonstrations**
+
+#### **Demo 1: Exclusive WRITE Lock** ⭐⭐⭐
+Demonstrates `fcntl(F_WRLCK)` - mutual exclusion for file writes.
+
+**What it does:**
+- Client A uploads a file → Acquires WRITE lock
+- Client B tries to upload same file → Lock rejected
+- Console shows: `[LOCK] WRITE acquired`, `[LOCK] WRITE denied`
+
+**Why it matters:** Shows that only one process can write at a time.
+
+**For Viva:** "This demonstrates mutual exclusion using fcntl F_WRLCK."
+
+---
+
+#### **Demo 2: Shared READ Locks (Readers-Writers)** ⭐⭐⭐
+Demonstrates `fcntl(F_RDLCK)` - multiple readers allowed, readers-writers problem.
+
+**What it does:**
+- Client A downloads file → Acquires READ lock
+- Client B downloads same file → Also acquires READ lock (shared!)
+- Both succeed simultaneously
+- Console shows: `[LOCK] READ acquired` (×2)
+
+**Why it matters:** Shows that readers don't block each other.
+
+**For Viva:** "This is the readers-writers problem solved using shared read locks."
+
+---
+
+#### **Demo 3: Deadlock Detection & Recovery** ⭐⭐⭐⭐
+Demonstrates deadlock recovery mechanism with timeout.
+
+**What it does:**
+- Simulates a stalled upload (client holds lock but doesn't complete)
+- System detects timeout after 300 seconds
+- Automatically releases lock and cleans up partial file
+- Console shows: `[TIMEOUT]`, `[RECOVERY]`, `[CLEANUP]`
+
+**Why it matters:** Shows proactive deadlock recovery.
+
+**For Viva:** "If a client stalls, we detect it via timeout and forcefully recover resources."
+
+---
+
+#### **Demo 4: Security Violation Detection** ⭐⭐⭐
+Demonstrates OS-level security: authentication, path traversal, access control.
+
+**What it does:**
+- Attempts path traversal attack → Blocked with validation
+- Invalid auth token → Rejected with 401
+- Access violations logged to security.log
+- Console shows: `[SECURITY]`, `[BLOCKED]`
+
+**Why it matters:** Shows defense-in-depth security model.
+
+**For Viva:** "Security violations are detected at API layer and logged comprehensively."
+
+---
+
+#### **Demo 5: Concurrent File Operations** ⭐⭐⭐
+Demonstrates lock granularity and concurrent access.
+
+**What it does:**
+- 3 simultaneous uploads (fileA, fileB, fileC)
+- Each acquires independent lock
+- All proceed without blocking each other
+- Console shows: `[CLIENT A]`, `[CLIENT B]`, `[CLIENT C]`
+
+**Why it matters:** Shows efficient fine-grained locking.
+
+**For Viva:** "File-level locking allows different files to be accessed concurrently."
+
+---
+
+#### **Demo 6: Deadlock Conditions Analysis (VIVA GOLD)** ⭐⭐⭐⭐⭐
+**NEW:** Shows Coffman's 4 deadlock conditions and how your system breaks them.
+
+**What it does:**
+- Shows all 4 necessary deadlock conditions:
+  1. Mutual Exclusion ✅ Required
+  2. Hold and Wait ❌ **BROKEN** (non-blocking locks)
+  3. No Preemption ❌ **BROKEN** (timeout recovery)
+  4. Circular Wait ❌ **BROKEN** (lock ordering)
+  
+- Explains would-be deadlock scenario
+- Shows how system avoids it
+- Includes viva answer template
+
+**Why it matters:** Demonstrates deep understanding of deadlock theory.
+
+**For Viva:** Perfect answer to "How is deadlock handled in your system?"
+
+### **Demo Mode Features**
+
+#### **📚 Explain Mode (Safe Presentation)**
+Toggle in top-right corner. When enabled:
+- ✅ Shows all explanations with color-coded concepts
+- ✅ No actual operations execute
+- ✅ Perfect for viva presentation (no risk of failure)
+- ❌ Run buttons disabled
+
+**Use case:** "Let me explain the concepts without actually running anything."
+
+#### **🖥️ Live OS Event Console**
+Real-time terminal output on right panel showing all events:
+```
+[STEP 1] Uploading demo-write-lock.txt...
+[LOCK] WRITE lock acquired on demo-write-lock.txt
+[UPLOAD] File uploaded successfully
+[STEP 2] Lock released after operation completed
+```
+
+#### **🔐 Active Locks Panel**
+Shows all currently held locks:
+- Filename
+- Lock type (READ or WRITE)
+- PID of process holding lock
+
+#### **⚠️ System Alerts**
+Real-time alerts with severity levels and timestamps.
+
+#### **📊 Live Stats**
+Counters for:
+- Files uploaded
+- Active locks
+- Operations performed
+- Security events
+
+#### **🎓 OS Concepts Mapping**
+Highlights relevant OS concepts during each demo:
+- UNIX File I/O
+- File Locking
+- Deadlock Prevention
+- IPC via TCP
+- Thread Synchronization
+- Security
+
+#### **🧹 Reset Demo State**
+Button to clean up all demo-generated test files.
+
+### **Demo Workflow for Evaluation**
+
+**Scenario: Evaluator asks "Show me deadlock handling"**
+
+1. **Login to dashboard** with user1/test123
+2. **Click "🎬 Demo Mode"**
+3. **Select Demo 3 OR Demo 6**
+   - Demo 3: Shows practical recovery mechanism
+   - Demo 6: Shows theoretical understanding
+4. **Toggle "Explain Mode" ON** (for safe presentation)
+5. **Click "📖 Explain" button**
+6. **Evaluator sees:**
+   - Detailed explanation with color coding
+   - 4 deadlock conditions checklist
+   - Which conditions your system breaks
+   - Viva answer template
+   - OS system calls used
+
+**Result:** Evaluator is impressed with both theoretical and practical knowledge!
+
+---
+
+## �🎯 Scoring Points for Evaluation
 
 ✅ **Correct use of UNIX system calls** (20%)
 - open(), read(), write(), fcntl(), stat(), unlink()

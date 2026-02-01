@@ -26,8 +26,40 @@ import time
 import tempfile
 from datetime import datetime
 
+# Import our auth and security modules
+from auth import auth_manager
+from security import security_manager
+
 app = Flask(__name__)
 CORS(app)  # Allow cross-origin requests from dashboard
+
+# ==================== AUTH HELPER FUNCTIONS ====================
+def get_client_ip():
+    """Get client IP address from request"""
+    if request.headers.get('X-Forwarded-For'):
+        return request.headers.get('X-Forwarded-For').split(',')[0].strip()
+    return request.remote_addr or '127.0.0.1'
+
+def require_auth(f):
+    """Decorator to require valid auth token"""
+    from functools import wraps
+    
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        token = request.headers.get('Authorization', '').replace('Bearer ', '')
+        
+        if not token:
+            return jsonify({'error': 'Missing authorization token'}), 401
+        
+        valid, session = auth_manager.validate_token(token)
+        if not valid:
+            return jsonify({'error': 'Invalid or expired token'}), 401
+        
+        # Attach session to request for use in endpoint
+        request.session = session
+        return f(*args, **kwargs)
+    
+    return decorated_function
 
 # C Server connection settings
 C_SERVER_HOST = '127.0.0.1'
@@ -44,8 +76,74 @@ AUTH_TOKEN = os.environ.get('FILE_SERVER_AUTH', 'os-core-token')
 
 def log_event(action, detail):
     """Lightweight stdout logging so WSL terminal shows API activity."""
-    ts = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    print(f"[{ts}] [API] {action} :: {detail}")
+    timestamp = datetime.now().strftime('%H:%M:%S')
+    print(f"[{timestamp}] {action}: {detail}")
+
+
+# ==================== DASHBOARD SERVING ====================
+@app.route('/', methods=['GET'])
+def serve_dashboard():
+    """Serve the web dashboard HTML"""
+    try:
+        dashboard_path = '../web_dashboard/dashboard.html'
+        if os.path.exists(dashboard_path):
+            with open(dashboard_path, 'r') as f:
+                return f.read(), 200, {'Content-Type': 'text/html'}
+        else:
+            return '<h1>Dashboard not found</h1>', 404, {'Content-Type': 'text/html'}
+    except Exception as e:
+        return f'<h1>Error loading dashboard: {str(e)}</h1>', 500, {'Content-Type': 'text/html'}
+
+@app.route('/dashboard.js', methods=['GET'])
+def serve_dashboard_js():
+    """Serve the dashboard JavaScript"""
+    try:
+        js_path = '../web_dashboard/dashboard.js'
+        if os.path.exists(js_path):
+            with open(js_path, 'r') as f:
+                return f.read(), 200, {'Content-Type': 'application/javascript'}
+        else:
+            return 'console.error("dashboard.js not found");', 404, {'Content-Type': 'application/javascript'}
+    except Exception as e:
+        return f'console.error("Error loading dashboard.js: {str(e)}");', 500, {'Content-Type': 'application/javascript'}
+@app.route('/demo.html', methods=['GET'])
+def serve_demo_html():
+    """Serve the demo mode HTML"""
+    try:
+        demo_path = '../web_dashboard/demo.html'
+        if os.path.exists(demo_path):
+            with open(demo_path, 'r') as f:
+                return f.read(), 200, {'Content-Type': 'text/html'}
+        else:
+            return '<h1>Demo page not found</h1>', 404, {'Content-Type': 'text/html'}
+    except Exception as e:
+        return f'<h1>Error loading demo page: {str(e)}</h1>', 500, {'Content-Type': 'text/html'}
+
+@app.route('/demo.js', methods=['GET'])
+def serve_demo_js():
+    """Serve the demo mode JavaScript"""
+    try:
+        js_path = '../web_dashboard/demo.js'
+        if os.path.exists(js_path):
+            with open(js_path, 'r') as f:
+                return f.read(), 200, {'Content-Type': 'application/javascript'}
+        else:
+            return 'console.error("demo.js not found");', 404, {'Content-Type': 'application/javascript'}
+    except Exception as e:
+        return f'console.error("Error loading demo.js: {str(e)}");', 500, {'Content-Type': 'application/javascript'}
+
+@app.route('/demo.css', methods=['GET'])
+def serve_demo_css():
+    """Serve the demo mode CSS"""
+    try:
+        css_path = '../web_dashboard/demo.css'
+        if os.path.exists(css_path):
+            with open(css_path, 'r') as f:
+                return f.read(), 200, {'Content-Type': 'text/css'}
+        else:
+            return '/* demo.css not found */', 404, {'Content-Type': 'text/css'}
+    except Exception as e:
+        return f'/* Error loading demo.css: {str(e)} */', 500, {'Content-Type': 'text/css'}
 
 # ============================================================================
 # HELPER: Communicate with C Server via TCP
@@ -82,6 +180,7 @@ def send_to_c_server(command):
 # ============================================================================
 
 @app.route('/api/upload', methods=['POST'])
+@require_auth
 def api_upload():
     """
     OS CONCEPT: File I/O (open, write), File Locking (fcntl F_WRLCK)
@@ -100,8 +199,14 @@ def api_upload():
     if file.filename == '':
         log_event('UPLOAD', 'rejected - empty filename')
         return jsonify({'success': False, 'error': 'Empty filename'}), 400
+    
+    # Get username from session for user-specific storage
+    username = request.session.get('username', 'anonymous')
+    
     # Sanitize filename to avoid spaces/shell chars breaking C server parse
     safe_name = os.path.basename(file.filename).replace(' ', '_')
+    # Prepend username directory for isolation
+    user_file_path = f"{username}/{safe_name}"
     
     # Save temporarily to send to C server (single-socket flow matches C client protocol)
     fd, temp_path = tempfile.mkstemp(prefix="api_upload_", suffix=f"_{safe_name}")
@@ -109,7 +214,8 @@ def api_upload():
         file.save(tmp)
     
     file_size = os.path.getsize(temp_path)
-    command = f"UPLOAD {safe_name} {file_size}\n"
+    # Use user-specific path for storage isolation
+    command = f"UPLOAD {user_file_path} {file_size}\n"
     
     try:
         # Open one TCP connection and follow the same protocol as the Python CLI client
@@ -132,20 +238,22 @@ def api_upload():
             os.remove(temp_path)
 
             if 'SUCCESS' in final_response:
-                log_event('UPLOAD', f"ok - {safe_name} ({file_size} bytes)")
+                log_event('UPLOAD', f"ok - {username}/{safe_name} ({file_size} bytes)")
                 return jsonify({
                     'success': True,
                     'message': f'File uploaded via C server: {safe_name}',
+                    'filename': safe_name,
                     'os_operations': ['open()', 'fcntl(F_WRLCK)', 'write()', 'close()']
                 })
-            log_event('UPLOAD', f"failed - {safe_name} :: {final_response.strip()}")
+            log_event('UPLOAD', f"failed - {username}/{safe_name} :: {final_response.strip()}")
             return jsonify({'success': False, 'error': final_response}), 500
     except Exception as e:
-        log_event('UPLOAD', f"exception - {safe_name} :: {e}")
+        log_event('UPLOAD', f"exception - {username}/{safe_name} :: {e}")
         os.remove(temp_path)
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/download/<filename>', methods=['GET'])
+@require_auth
 def api_download(filename):
     """
     OS CONCEPT: File I/O (read), Shared Locking (fcntl F_RDLCK)
@@ -155,7 +263,10 @@ def api_download(filename):
     - Reads file using read()
     - Multiple readers can download simultaneously (shared locks)
     """
-    command = f"DOWNLOAD {filename}"
+    # Get username from session for user-specific storage
+    username = request.session.get('username', 'anonymous')
+    user_file_path = f"{username}/{filename}"
+    command = f"DOWNLOAD {user_file_path}"
     
     try:
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -195,6 +306,7 @@ def api_download(filename):
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/delete/<filename>', methods=['DELETE'])
+@require_auth
 def api_delete(filename):
     """
     OS CONCEPT: File Deletion (unlink), Exclusive Locking (fcntl F_WRLCK)
@@ -204,7 +316,10 @@ def api_delete(filename):
     - Deletes file using unlink()
     - Prevents deletion while file is in use
     """
-    command = f"DELETE {filename}"
+    # Get username from session for user-specific storage
+    username = request.session.get('username', 'anonymous')
+    user_file_path = f"{username}/{filename}"
+    command = f"DELETE {user_file_path}"
     result = send_to_c_server(command)
     
     if result['success'] and 'SUCCESS' in result['response']:
@@ -219,6 +334,7 @@ def api_delete(filename):
         return jsonify({'success': False, 'error': result.get('error', 'Delete failed')}), 500
 
 @app.route('/api/list', methods=['GET'])
+@require_auth
 def api_list():
     """
     OS CONCEPT: Directory Traversal (readdir), File Status (stat)
@@ -227,8 +343,12 @@ def api_list():
     - opendir() to open storage directory
     - readdir() to iterate files
     - stat() to get file sizes
+    
+    Returns only files for the authenticated user.
     """
-    command = "LIST"
+    # Get username from session for user-specific storage
+    username = request.session.get('username', 'anonymous')
+    command = f"LIST {username}"
     result = send_to_c_server(command)
     
     if result['success']:
@@ -242,6 +362,9 @@ def api_list():
                 parts = line.split('(')
                 if len(parts) == 2:
                     filename = parts[0].strip()
+                    # Remove username prefix if present for display
+                    if filename.startswith(f"{username}/"):
+                        filename = filename[len(username)+1:]
                     size_str = parts[1].split()[0]
                     files.append({
                         'name': filename,
@@ -249,7 +372,7 @@ def api_list():
                         'size_human': format_bytes(int(size_str))
                     })
         
-        log_event('LIST', f"ok - {len(files)} files")
+        log_event('LIST', f"ok - {username} has {len(files)} files")
         return jsonify({
             'success': True,
             'files': files,
@@ -331,6 +454,37 @@ def api_logs():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
+@app.route('/api/logs/clear', methods=['DELETE'])
+@require_auth
+def api_clear_logs():
+    """
+    Clear audit log history
+    
+    Truncates the audit log file to start fresh
+    Requires authentication to prevent unauthorized clearing
+    """
+    try:
+        if os.path.exists(AUDIT_LOG_FILE):
+            # Truncate file by opening in write mode
+            with open(AUDIT_LOG_FILE, 'w') as f:
+                f.write('')  # Empty the file
+            
+            log_event('CLEAR_LOGS', f"ok - cleared by {request.session.get('username', 'unknown')}")
+            
+            return jsonify({
+                'success': True,
+                'message': 'Audit log history cleared',
+                'cleared_by': request.session.get('username', 'unknown')
+            })
+        else:
+            return jsonify({
+                'success': True,
+                'message': 'No audit log file to clear'
+            })
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
 @app.route('/api/security', methods=['GET'])
 def api_security():
     """Expose security log events (auth failures, integrity issues)."""
@@ -352,6 +506,7 @@ def api_security():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/status', methods=['GET'])
+@require_auth
 def api_status():
     """
     OS CONCEPT: System Status Monitoring
@@ -362,8 +517,11 @@ def api_status():
     - System health
     """
     try:
-        # Get file list from C server (authoritative source)
-        list_result = send_to_c_server("LIST")
+        # Get username from session for user-specific file counting
+        username = request.session.get('username', 'anonymous')
+        
+        # Get file list from C server (authoritative source) for this user only
+        list_result = send_to_c_server(f"LIST {username}")
         c_server_running = list_result['success']
         
         # Count files from C server response
@@ -474,6 +632,239 @@ def parse_security_log_line(line):
         return {'timestamp': '', 'event': 'PARSE_ERROR', 'ip': '', 'file': '', 'details': line}
 
 # ============================================================================
+# AUTHENTICATION ENDPOINTS (PHASE 1)
+# ============================================================================
+
+@app.route('/api/login', methods=['POST'])
+def login():
+    """
+    Authenticate user with username/password
+    Returns: JWT-like token for subsequent requests
+    
+    OS Concept: File-based access control (reading users.db)
+    """
+    data = request.get_json()
+    username = data.get('username', '')
+    password = data.get('password', '')
+    client_ip = get_client_ip()
+    
+    log_event('LOGIN_ATTEMPT', f'User={username} IP={client_ip}')
+    
+    success, message, token = auth_manager.authenticate(username, password, client_ip)
+    
+    if success:
+        log_event('LOGIN_SUCCESS', f'User={username} Token={token[:16]}...')
+        return jsonify({
+            'success': True,
+            'token': token,
+            'username': username,
+            'message': message
+        }), 200
+    else:
+        log_event('LOGIN_FAILED', f'User={username} IP={client_ip} Reason={message}')
+        return jsonify({
+            'success': False,
+            'message': message
+        }), 401
+
+@app.route('/api/logout', methods=['POST'])
+@require_auth
+def logout():
+    """
+    Logout and invalidate session token
+    
+    OS Concept: Session termination, resource cleanup
+    """
+    token = request.headers.get('Authorization', '').replace('Bearer ', '')
+    username = request.session.get('username', 'unknown')
+    
+    if auth_manager.logout(token):
+        log_event('LOGOUT_SUCCESS', f'User={username}')
+        return jsonify({'success': True, 'message': 'Logged out successfully'}), 200
+    else:
+        return jsonify({'success': False, 'message': 'Logout failed'}), 400
+
+@app.route('/api/session-info', methods=['GET'])
+@require_auth
+def session_info():
+    """
+    Get current session information
+    
+    OS Concept: Process identity and context
+    """
+    token = request.headers.get('Authorization', '').replace('Bearer ', '')
+    info = auth_manager.get_session_info(token)
+    
+    if info:
+        return jsonify({
+            'success': True,
+            'session': info,
+            'active_sessions': auth_manager.get_active_sessions_count()
+        }), 200
+    else:
+        return jsonify({'success': False, 'message': 'Session invalid'}), 401
+
+@app.route('/api/events', methods=['GET'])
+@require_auth
+def get_events():
+    """
+    Get live OS event stream
+    Parses events.log file generated by C server
+    
+    OS Concept: Audit trail, real-time system monitoring
+    """
+    try:
+        events = []
+        events_file = '../logs/events.log'
+        
+        if os.path.exists(events_file):
+            with open(events_file, 'r') as f:
+                for line in f:
+                    line = line.strip()
+                    if line:
+                        events.append(parse_event_line(line))
+        
+        # Return last 50 events (most recent first)
+        events = events[-50:]
+        events.reverse()
+        
+        return jsonify({'success': True, 'events': events}), 200
+    except Exception as e:
+        log_event('EVENTS_ERROR', str(e))
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+def parse_event_line(line):
+    """Parse event line from events.log"""
+    try:
+        # Format: [timestamp] EVENT_TYPE filename lock_type pid user status
+        parts = line.strip('[]').split('] ', 1)
+        if len(parts) == 2:
+            timestamp = parts[0]
+            rest = parts[1]
+            tokens = rest.split()
+            
+            return {
+                'timestamp': timestamp,
+                'event_type': tokens[0] if len(tokens) > 0 else 'UNKNOWN',
+                'filename': tokens[1] if len(tokens) > 1 else '',
+                'lock_type': tokens[2] if len(tokens) > 2 else 'NONE',
+                'pid': tokens[3] if len(tokens) > 3 else '',
+                'user': tokens[4] if len(tokens) > 4 else 'system',
+                'status': tokens[5] if len(tokens) > 5 else 'PENDING'
+            }
+    except:
+        pass
+    
+    return {'timestamp': '', 'event_type': 'PARSE_ERROR', 'raw': line}
+
+# ============================================================================
+# PHASE 3: SECURITY ENDPOINTS
+# ============================================================================
+
+@app.route('/api/security/events', methods=['GET'])
+@require_auth
+def get_security_events():
+    """Get security events (requires authentication)"""
+    try:
+        limit = request.args.get('limit', 50, type=int)
+        events = security_manager.get_security_events(limit)
+        return jsonify({
+            'success': True,
+            'events': events,
+            'count': len(events)
+        }), 200
+    except Exception as e:
+        log_event('SECURITY_EVENTS_ERROR', str(e))
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/security/summary', methods=['GET'])
+@require_auth
+def get_security_summary():
+    """Get security summary (requires authentication)"""
+    try:
+        summary = security_manager.get_summary()
+        return jsonify({
+            'success': True,
+            'summary': summary
+        }), 200
+    except Exception as e:
+        log_event('SECURITY_SUMMARY_ERROR', str(e))
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/security/threats', methods=['GET'])
+@require_auth
+def get_security_threats():
+    """Get high/critical severity threats only"""
+    try:
+        limit = request.args.get('limit', 20, type=int)
+        threats = security_manager.get_high_severity_events(limit)
+        return jsonify({
+            'success': True,
+            'threats': threats,
+            'count': len(threats),
+            'threat_level': 'CRITICAL' if len(threats) > 5 else ('HIGH' if len(threats) > 2 else 'NORMAL')
+        }), 200
+    except Exception as e:
+        log_event('SECURITY_THREATS_ERROR', str(e))
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/security/check/<path:filename>', methods=['POST'])
+@require_auth
+def check_file_security(filename):
+    """Check file for security violations"""
+    try:
+        # Check path traversal
+        safe, reason = security_manager.check_path_traversal(filename)
+        if not safe:
+            return jsonify({
+                'success': False,
+                'check': 'PATH_TRAVERSAL',
+                'reason': reason,
+                'severity': 'CRITICAL'
+            }), 403
+        
+        return jsonify({
+            'success': True,
+            'file': filename,
+            'path_safe': True,
+            'checks': {
+                'path_traversal': 'PASS',
+                'access_control': 'PASS'
+            }
+        }), 200
+    except Exception as e:
+        log_event('SECURITY_CHECK_ERROR', str(e))
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/security/status', methods=['GET'])
+def get_security_status():
+    """Get overall security status (no auth required for general info)"""
+    try:
+        summary = security_manager.get_summary()
+        threat_count = len(security_manager.get_high_severity_events())
+        blocked_count = len(security_manager.blocked_ips)
+        
+        # Determine threat level
+        if threat_count > 10 or blocked_count > 3:
+            threat_level = 'CRITICAL'
+        elif threat_count > 5 or blocked_count > 1:
+            threat_level = 'HIGH'
+        else:
+            threat_level = 'NORMAL'
+        
+        return jsonify({
+            'success': True,
+            'threat_level': threat_level,
+            'events': summary['total_events'],
+            'high_severity': summary['high_severity'],
+            'blocked_ips': blocked_count,
+            'status': 'SECURE' if threat_level == 'NORMAL' else f'WARNING: {threat_level}'
+        }), 200
+    except Exception as e:
+        log_event('SECURITY_STATUS_ERROR', str(e))
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+# ============================================================================
 # MAIN
 # ============================================================================
 
@@ -486,9 +877,9 @@ if __name__ == '__main__':
     print()
     print("ARCHITECTURE:")
     print("  C File Server (OS Core)")
-    print("       ↓ TCP/IPC")
+    print("       | TCP/IPC")
     print("  Python API Layer (This)")
-    print("       ↓ HTTP/JSON")
+    print("       | HTTP/JSON")
     print("  Web Dashboard (Browser)")
     print()
     print("ALL FILE OPERATIONS HAPPEN IN C SERVER")
